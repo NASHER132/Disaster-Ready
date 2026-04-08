@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Ready: Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen" class="screen">
+            <h1>DISASTER READY</h1>
+            <p>ACLC College of Sta. Maria • SHS Research</p>
+            <div class="menu-btns">
+                <button class="main-btn" onclick="showSelection()">START</button>
+                <button class="exit-btn" onclick="exitGame()">EXIT</button>
+            </div>
+        </div>
+
+        <div id="selection-screen" class="screen hidden">
+            <h2>Select Disaster Scenario</h2>
+            <div class="menu-btns">
+                <button onclick="startGame(0)">TYPHOON</button>
+                <button onclick="startGame(1)">EARTHQUAKE</button>
+                <button onclick="startGame(2)">VOLCANIC ERUPTION</button>
+                <button class="back-btn" onclick="goToMenu()">BACK</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="header">
+                <button id="settings-trigger" onclick="toggleSettings()" style="width: auto; padding: 10px;">⚙️ MENU</button>
+                <h3 id="disaster-title">Scenario</h3>
+                <div id="timer-box" class="stat">⏳ <span id="timer">15</span>s</div>
+            </div>
+
+            <div id="settings-menu" class="hidden">
+                <button onclick="resumeGame()" style="width: 100%;">RESUME</button>
+                <button onclick="goToMenu()" style="width: 100%;">QUIT TO MENU</button>
+            </div>
+
+            <div class="story-container">
+                <p id="text-display">Loading...</p>
+                <div id="choice-buttons" class="btn-grid"></div>
+            </div>
+
+            <div id="hud">
+                <div class="stat">❤️ HP: <span id="health">100</span></div>
+                <div class="stat">⚠️ RISK: <span id="safety">0</span>%</div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
