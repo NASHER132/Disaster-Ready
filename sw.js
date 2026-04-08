@@ -18,7 +18,7 @@ self.addEventListener('install', e => {
 // This part tells the browser: "If there's no Wi-Fi, use the saved files"
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(response => {
+    caches.match(e.request, { ignoreSearch: true }).then(response => {
       return response || fetch(e.request);
     })
   );
