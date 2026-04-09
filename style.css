@@ -35,20 +35,18 @@ body {
 }
 
 button {
-    width: 280px; /* Forces all buttons to this exact width */
-    padding: 15px;
-    margin: 10px auto;
+    width: 280px; /* Exact same size for all buttons */
+    padding: 18px;
     font-size: 1.1rem;
     font-weight: bold;
     text-transform: uppercase;
     border: none;
     border-radius: 8px;
-    background: #d9534f; /* Disaster Red */
+    background: var(--danger);
     color: white;
     cursor: pointer;
-    display: block; /* Helps center them in a stack */
+    transition: 0.2s;
 }
-
 button:hover { background: #c9302c; transform: translateY(-2px); }
 
 .main-btn { background: var(--safe); }
