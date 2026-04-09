@@ -85,75 +85,33 @@ const storyData = [
     }
 ];
 
-function startGame() {
-    health = 100;
-    score = 0;
-    currentQuestionIndex = 0;
-    showScreen('game-screen');
-    updateUI();
-    showQuestion();
-}
+function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
+function showSelection() { document.getElementById('start-screen').classList.add('hidden'); document.getElementById('selection-screen').classList.remove('hidden'); }
+function exitGame() { if(confirm("Exit simulation?")) { window.close(); alert("Close tab to exit."); } }
+function startGame(idx) { selectedDisasterIdx = idx; health = 100; safetyLevel = 0; currentStep = 0; document.getElementById('selection-screen').classList.add('hidden'); document.getElementById('game-screen').classList.remove('hidden'); updateHUD(); loadStep(); }
 
-function showQuestion() {
-    if (currentQuestionIndex >= questions.length) {
-        showFinish();
-        return;
-    }
-
-    const q = questions[currentQuestionIndex];
-    document.getElementById('scenario-text').innerText = q.text;
-    const container = document.getElementById('options-container');
-    container.innerHTML = '';
-
-    q.options.forEach(opt => {
+function loadStep() {
+    if (health <= 0) return endGame("Game Over: Your safety choices were too risky.");
+    clearInterval(timer); timeLeft = 15;
+    document.getElementById('timer').innerText = timeLeft;
+    startTimer();
+    let step = storyData[selectedDisasterIdx].steps[currentStep];
+    document.getElementById('disaster-title').innerText = (selectedDisasterIdx === 0 && step.floodEvent) ? "Typhoon & Flood" : storyData[selectedDisasterIdx].name;
+    document.getElementById('text-display').innerText = step.text;
+    const btnContainer = document.getElementById('choice-buttons');
+    btnContainer.innerHTML = '';
+    shuffle([...step.choices]).forEach(choice => {
         const btn = document.createElement('button');
-        btn.innerText = opt.text;
-        btn.onclick = () => handleAnswer(opt.health, opt.score);
-        container.appendChild(btn);
+        btn.innerText = choice.t;
+        btn.onclick = () => handleChoice(choice.correct);
+        btnContainer.appendChild(btn);
     });
 }
 
-function handleAnswer(hChange, sChange) {
-    health += hChange;
-    score += sChange;
-    currentQuestionIndex++;
-
-    if (health <= 0) {
-        health = 0;
-        showGameOver();
-    } else {
-        updateUI();
-        showQuestion();
-    }
-}
-
-function updateUI() {
-    document.getElementById('health-display').innerText = health;
-    document.getElementById('score-display').innerText = score;
-}
-
-function showScreen(screenId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-    document.getElementById(screenId).classList.remove('hidden');
-}
-
-function showGameOver() {
-    showScreen('game-over-screen');
-}
-
-function showFinish() {
-    showScreen('finish-screen');
-    document.getElementById('final-score').innerText = score;
-    document.getElementById('final-health').innerText = health + "%";
-    
-    // Risk Level Logic
-    let risk = "High";
-    if (health > 80) risk = "Low";
-    else if (health > 40) risk = "Medium";
-    document.getElementById('final-risk').innerText = risk;
-}
-
-function goToStart() {
-    showScreen('start-ui');
-}n.reload(); }
+function startTimer() { timer = setInterval(() => { timeLeft--; document.getElementById('timer').innerText = timeLeft; if (timeLeft <= 0) handleChoice(false); }, 1000); }
+function handleChoice(isCorrect) { if (!isCorrect) { health -= 10; safetyLevel += 5; updateHUD(); } currentStep++; if (currentStep >= storyData[selectedDisasterIdx].steps.length) endGame("Simulation Complete!"); else loadStep(); }
+function updateHUD() { document.getElementById('health').innerText = health; document.getElementById('safety').innerText = safetyLevel; }
+function toggleSettings() { document.getElementById('settings-menu').classList.toggle('hidden'); }
+function resumeGame() { toggleSettings(); }
+function goToMenu() { clearInterval(timer); location.reload(); }
 function endGame(msg) { clearInterval(timer); alert(msg); location.reload(); }
