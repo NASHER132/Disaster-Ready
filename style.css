@@ -1,72 +1,75 @@
+:root {
+    --danger: #d9534f;
+    --safe: #5cb85c;
+    --dark: #121212;
+    --accent: #f0ad4e;
+    --gray: #444;
+}
+
 body {
-    background-color: #1a1a1a;
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
+    margin: 0; padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #000; color: white;
+    display: flex; justify-content: center; align-items: center;
+    height: 100vh; overflow: hidden;
+}
+
+#game-container {
+    width: 100vw; height: 100vh; max-width: 1000px;
+    background-color: var(--dark);
+    display: flex; flex-direction: column;
+    border: 1px solid #333;
+}
+
+.screen { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
+.hidden { display: none !important; }
+
+/* STACKED BUTTON LAYOUT */
+.menu-btns {
     display: flex;
-    justify-content: center;
+    flex-direction: column; 
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
+    gap: 15px;
+    margin-top: 30px;
+    width: 100%;
 }
 
-.container { text-align: center; width: 90%; max-width: 500px; }
-
-.hidden { display: none; }
-
-/* Menu Button */
-#menu-btn {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: #444;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Uniform Buttons */
-.main-btn, #options-container button {
-    width: 280px;
-    padding: 15px;
-    margin: 10px auto;
-    font-size: 1rem;
+button {
+    width: 280px; /* Exact same size for all buttons */
+    padding: 18px;
+    font-size: 1.1rem;
     font-weight: bold;
+    text-transform: uppercase;
     border: none;
-    border-radius: 10px;
-    background: #d9534f;
+    border-radius: 8px;
+    background: var(--danger);
     color: white;
     cursor: pointer;
-    display: block;
-    transition: transform 0.2s;
+    transition: 0.2s;
 }
 
-.main-btn:active { transform: scale(0.95); }
+button:hover { background: #c9302c; transform: translateY(-2px); }
 
-/* Animations */
-@keyframes trophyBounce {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50% { transform: translateY(-20px) scale(1.1); }
+.main-btn { background: var(--safe); }
+.exit-btn { background: var(--gray); }
+.back-btn { background: #555; width: 140px; margin-top: 10px; }
+
+/* HEADER & HUD */
+#header, #hud {
+    width: 100%; display: flex; justify-content: space-between;
+    align-items: center; padding: 15px 25px;
+    background: rgba(255,255,255,0.05); box-sizing: border-box;
 }
 
-.trophy-animation {
-    font-size: 80px;
-    animation: trophyBounce 2s infinite ease-in-out;
-}
+.stat { font-weight: bold; font-size: 1.1rem; color: var(--accent); }
 
-.dead-title { color: #ff4d4d; font-size: 3rem; }
+.story-container { flex: 1; width: 90%; display: flex; flex-direction: column; justify-content: center; }
+#text-display { font-size: 1.3rem; margin-bottom: 30px; line-height: 1.5; }
 
-.stats-box {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 15px;
-    margin: 20px 0;
-}
+.btn-grid { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 
-.risk-badge {
-    padding: 2px 10px;
-    border-radius: 5px;
-    background: orange;
+#settings-menu {
+    position: absolute; top: 70px; left: 20px; background: #222;
+    padding: 20px; border: 2px solid var(--accent); z-index: 100;
+    display: flex; flex-direction: column; gap: 10px; border-radius: 8px;
 }
