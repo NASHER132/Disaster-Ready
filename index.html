@@ -3,60 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Disaster Ready: Simulation</title>
+    <title>Disaster Ready</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game-container">
-        <div id="start-screen" class="screen">
-            <h1>DISASTER READY</h1>
-            <p>ACLC College of Sta. Maria • SHS Research</p>
-            <div class="menu-btns">
-                <button class="main-btn" onclick="showSelection()">START</button>
-                <button class="exit-btn" onclick="exitGame()">EXIT</button>
-            </div>
-        </div>
 
-        <div id="selection-screen" class="screen hidden">
-            <h2>Select Disaster Scenario</h2>
-            <div class="menu-btns">
-                <button onclick="startGame(0)">TYPHOON</button>
-                <button onclick="startGame(1)">EARTHQUAKE</button>
-                <button onclick="startGame(2)">VOLCANIC ERUPTION</button>
-                <button class="back-btn" onclick="goToMenu()">BACK</button>
-            </div>
+    <button id="menu-btn" onclick="goToStart()">Menu</button>
+
+    <div class="container">
+        <div id="start-ui" class="screen">
+            <h1>Disaster Ready</h1>
+            <p>Are you prepared to survive?</p>
+            <button class="main-btn" onclick="startGame()">START</button>
         </div>
 
         <div id="game-screen" class="screen hidden">
-            <div id="header">
-                <button id="settings-trigger" onclick="toggleSettings()" style="width: auto; padding: 10px;">⚙️ MENU</button>
-                <h3 id="disaster-title">Scenario</h3>
-                <div id="timer-box" class="stat">⏳ <span id="timer">15</span>s</div>
+            <div class="stats-bar">
+                <span>Health: <span id="health-display">100</span>%</span>
+                <span>Score: <span id="score-display">0</span></span>
             </div>
+            <h2 id="scenario-text">Scenario goes here...</h2>
+            <div id="options-container"></div>
+        </div>
 
-            <div id="settings-menu" class="hidden">
-                <button onclick="resumeGame()" style="width: 100%;">RESUME</button>
-                <button onclick="goToMenu()" style="width: 100%;">QUIT TO MENU</button>
-            </div>
+        <div id="game-over-screen" class="screen hidden">
+            <h1 class="dead-title">GAME OVER</h1>
+            <div class="animation-icon">💀</div>
+            <p>You didn't survive the disaster.</p>
+            <button class="main-btn" onclick="goToStart()">TRY AGAIN</button>
+        </div>
 
-            <div class="story-container">
-                <p id="text-display">Loading...</p>
-                <div id="choice-buttons" class="btn-grid"></div>
+        <div id="finish-screen" class="screen hidden">
+            <h1>FINISHED!</h1>
+            <div class="trophy-animation">🏆</div>
+            <div class="stats-box">
+                <p>Final Score: <span id="final-score">0</span></p>
+                <p>End Health: <span id="final-health">0%</span></p>
+                <p>Risk Level: <span id="final-risk" class="risk-badge">Low</span></p>
             </div>
-
-            <div id="hud">
-                <div class="stat">❤️ HP: <span id="health">100</span></div>
-                <div class="stat">⚠️ RISK: <span id="safety">0</span>%</div>
-            </div>
+            <button class="main-btn" onclick="goToStart()">PLAY AGAIN</button>
         </div>
     </div>
-    <script src="script.js"></script>
 
+    <script src="script.js"></script>
     <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-          .then(() => console.log("Offline Mode Ready"));
-      }
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log("Offline Mode Ready"));
+        }
     </script>
 </body>
 </html>
