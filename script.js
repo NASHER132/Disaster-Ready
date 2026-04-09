@@ -84,7 +84,6 @@ const storyData = [
         ]
     }
 ];
-
 function shuffle(array) { return array.sort(() => Math.random() - 0.5); }
 function showSelection() { document.getElementById('start-screen').classList.add('hidden'); document.getElementById('selection-screen').classList.remove('hidden'); }
 function exitGame() { if(confirm("Exit simulation?")) { window.close(); alert("Close tab to exit."); } }
